@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "@tsconfig/recommended/tsconfig.json",
+    "@tsconfig/node24/tsconfig.json",
+    "@tsconfig/strictest/tsconfig.json"
+  ],
+  "exclude": ["node_modules", "dist", "coverage"],
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "noPropertyAccessFromIndexSignature": false,
+
+    "noEmit": true,
+    "target": "esnext",
+    "module": "nodenext",
+    "rewriteRelativeImportExtensions": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true
+  }
+}
