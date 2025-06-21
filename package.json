@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "@discordjs/core": "^2.1.1",
+    "discord.js": "^14.20.0",
     "zod": "^3.25.67"
   },
   "type": "module",
