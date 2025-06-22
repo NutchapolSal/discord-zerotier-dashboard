@@ -2,9 +2,9 @@ printWidth: 80
 semi: false
 overrides:
   - files:
-      - '*.js'
-      - '*.mjs'
-      - '*.ts'
+      - "*.js"
+      - "*.mjs"
+      - "*.ts"
     options:
       parser: typescript
       tabWidth: 4

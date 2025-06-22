@@ -96,8 +96,8 @@ export default tseslint.config([
         ...c,
         rules: Object.fromEntries(
             Object.entries(c.rules ?? {}).map((v) =>
-                v[1] == "error" ? [v[0], "warn"] : v
-            )
+                v[1] == "error" ? [v[0], "warn"] : v,
+            ),
         ),
     })),
     {
