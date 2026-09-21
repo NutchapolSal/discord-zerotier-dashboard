@@ -107,9 +107,8 @@ export default defineConfig([
                 ...globals.node,
             },
 
-            parser: tseslint.parser,
             parserOptions: {
-                project: ["./tsconfig.json"],
+                projectService: true,
             },
         },
 
@@ -173,15 +172,6 @@ export default defineConfig([
             ],
 
             "import-x/no-useless-path-segments": "warn",
-
-            "import-x/order": [
-                "warn",
-                {
-                    alphabetize: {
-                        order: "asc",
-                    },
-                },
-            ],
 
             "@typescript-eslint/no-unused-vars": "warn",
             "@typescript-eslint/prefer-string-starts-ends-with": "warn",
