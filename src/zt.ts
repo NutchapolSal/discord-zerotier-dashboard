@@ -1,4 +1,4 @@
-import * as z from "zod/v4"
+import * as z from "zod"
 
 const ztApi = (path: string) =>
     new URL(path, "https://api.zerotier.com/api/v1/")
