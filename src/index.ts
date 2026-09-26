@@ -7,7 +7,7 @@ const keyword = config.ZEROTIER_DESCRIPTION_KEYWORD
 
 function createEmbed(
     networkName: string,
-    networkDomain: string,
+    networkDomain: string | null,
     networkMembers: ZTNetworkMember[],
 ) {
     const dateNow = new Date()
@@ -32,12 +32,14 @@ function createEmbed(
         )
         .forEach((v) => {
             const online = lastSeenLimitDate < new Date(v.lastSeen)
-            const domainName = v.name ? toHostname(v.name) : null
             const list = []
-            if (domainName) {
-                list.push(`\`${domainName}.${networkDomain}\``)
-            } else {
-                list.push(`\`zt-${v.nodeId}.${networkDomain}\``)
+            if (networkDomain) {
+                const domainName = v.name ? toHostname(v.name) : null
+                if (domainName) {
+                    list.push(`\`${domainName}.${networkDomain}\``)
+                } else {
+                    list.push(`\`zt-${v.nodeId}.${networkDomain}\``)
+                }
             }
             list.push(...v.config.ipAssignments.map((ip) => `\`${ip}\``))
             const list2 = [`**Internal**\n${list.join("\n")}`]
@@ -45,7 +47,7 @@ function createEmbed(
                 list2.push(`**Physical**\n\`${v.physicalAddress}\``)
             }
             embed.addFields({
-                name: `${online ? "🟢" : "➖"} ${v.name}`,
+                name: `${online ? "🟢" : "➖"} ${v.name ?? v.nodeId}`,
                 value: list2.join("\n"),
             })
         })
@@ -87,14 +89,8 @@ while (true) {
         token: config.ZEROTIER_TOKEN,
     })
 
-    const zerotierDomain = network.config.dns.domain ?? config.ZEROTIER_DOMAIN
-    if (!zerotierDomain) {
-        console.log("no DNS domain specified")
-        console.log(
-            "either setup DNS in ZeroTier Central or set ZEROTIER_DOMAIN to the domain with DNS records for ZT members",
-        )
-        process.exit()
-    }
+    const zerotierDomain =
+        network.config.dns.domain ?? config.ZEROTIER_DOMAIN ?? null
 
     await webhookClient.editMessage(config.DISCORD_WEBHOOK_MESSAGE_ID, {
         content: "",
