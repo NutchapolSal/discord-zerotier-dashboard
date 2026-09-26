@@ -22,3 +22,7 @@ you need to provide some environment variables so the script can work
 
 ### Optional
 - `ZEROTIER_DOMAIN`: if you aren't configuring DNS in ZeroTier, leave this unset to not display hostnames, or set this to the domain you're publishing records to.
+
+### Display
+- `DISPLAY_OFFLINE_MEMBERS`: `true`/`short`/`false` configure how to display offline members. `short` hides the hostname and IPs when offline. `false` also removes the member name from the embed. defaults to `true` when unset
+- `DISPLAY_PHYSICAL_ADDRESS`: `true`/`false` displays the member's physical address on the embed. defaults to `true` when unset

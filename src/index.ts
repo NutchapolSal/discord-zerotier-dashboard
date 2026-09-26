@@ -32,6 +32,21 @@ function createEmbed(
         )
         .forEach((v) => {
             const online = lastSeenLimitDate < new Date(v.lastSeen)
+            const header = `${online ? "🟢" : "➖"} ${v.name ?? v.nodeId}`
+            if (!online) {
+                if (config.DISPLAY_OFFLINE_MEMBERS === false) {
+                    return
+                }
+
+                if (config.DISPLAY_OFFLINE_MEMBERS == "short") {
+                    embed.addFields({
+                        name: header,
+                        value: "",
+                    })
+                    return
+                }
+            }
+
             const list = []
             if (networkDomain) {
                 const domainName = v.name ? toHostname(v.name) : null
@@ -42,12 +57,17 @@ function createEmbed(
                 }
             }
             list.push(...v.config.ipAssignments.map((ip) => `\`${ip}\``))
-            const list2 = [`**Internal**\n${list.join("\n")}`]
-            if (v.physicalAddress) {
-                list2.push(`**Physical**\n\`${v.physicalAddress}\``)
+            const list2 = []
+            if (config.DISPLAY_PHYSICAL_ADDRESS) {
+                list2.push(`**Internal**`)
+            }
+            list2.push(list.join("\n"))
+            if (config.DISPLAY_PHYSICAL_ADDRESS && v.physicalAddress) {
+                list2.push(`**Physical**`)
+                list2.push(`\`${v.physicalAddress}\``)
             }
             embed.addFields({
-                name: `${online ? "🟢" : "➖"} ${v.name ?? v.nodeId}`,
+                name: header,
                 value: list2.join("\n"),
             })
         })

@@ -8,6 +8,10 @@ const configRes = z
         ZEROTIER_DESCRIPTION_KEYWORD: z.string().default(""),
         DISCORD_WEBHOOK_MESSAGE_ID: z.string().nullish(),
         ZEROTIER_DOMAIN: z.string().nullish(),
+        DISPLAY_PHYSICAL_ADDRESS: z.stringbool().default(true),
+        DISPLAY_OFFLINE_MEMBERS: z
+            .union([z.stringbool(), z.literal("short")])
+            .default(true),
     })
     .safeParse(process.env)
 if (!configRes.success) {
