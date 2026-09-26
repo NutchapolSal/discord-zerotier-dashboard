@@ -96,6 +96,7 @@ if (!config.DISCORD_WEBHOOK_MESSAGE_ID) {
     process.exit()
 }
 
+console.log("starting...", new Date())
 /* eslint-disable no-await-in-loop */
 // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 while (true) {
