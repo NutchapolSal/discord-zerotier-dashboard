@@ -1,5 +1,6 @@
 import { EmbedBuilder, WebhookClient } from "discord.js"
 import { config } from "./config.ts"
+import { toHostname } from "./hostname.ts"
 import { getNetwork, getNetworkMembers, type ZTNetworkMember } from "./zt.ts"
 
 const keyword = config.ZEROTIER_DESCRIPTION_KEYWORD
@@ -26,13 +27,17 @@ function createEmbed(
 
     authedMembers
         .filter((v) => v.description.includes(keyword))
-        .toSorted((a, b) => (a.name ?? "").localeCompare(b.name ?? ""))
+        .toSorted((a, b) =>
+            (a.name ?? a.nodeId).localeCompare(b.name ?? a.nodeId),
+        )
         .forEach((v) => {
             const online = lastSeenLimitDate < new Date(v.lastSeen)
-            const domainName = v.name?.toLowerCase().replace(/ /gu, "-")
+            const domainName = v.name ? toHostname(v.name) : null
             const list = []
             if (domainName) {
                 list.push(`\`${domainName}.${networkDomain}\``)
+            } else {
+                list.push(`\`zt-${v.nodeId}.${networkDomain}\``)
             }
             list.push(...v.config.ipAssignments.map((ip) => `\`${ip}\``))
             const list2 = [`**Internal**\n${list.join("\n")}`]

@@ -4,6 +4,8 @@ small script to update a webhook message with data from a zerotier network
 
 ![Screenshot 2025-06-22 212135](https://github.com/user-attachments/assets/6222f6b4-30c2-4e99-b445-6218f577f050)
 
+assumes zeronsd style names for hostnames
+
 ## Setup
 
 available as a docker image `ghcr.io/nutchapolsal/discord-zerotier-dashboard`
