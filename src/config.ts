@@ -7,6 +7,7 @@ const configRes = z
         ZEROTIER_NETWORK_ID: z.string(),
         ZEROTIER_DESCRIPTION_KEYWORD: z.string().default(""),
         DISCORD_WEBHOOK_MESSAGE_ID: z.string().nullish(),
+        ZEROTIER_DOMAIN: z.string().nullish(),
     })
     .safeParse(process.env)
 if (!configRes.success) {

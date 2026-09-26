@@ -7,10 +7,12 @@ const networkSchema = z.object({
     config: z.object({
         name: z.string(),
         dns: z.object({
-            domain: z.string(),
+            domain: z.string().transform((v) => (v.length == 0 ? null : v)),
         }),
     }),
 })
+
+export type ZTNetwork = z.infer<typeof networkSchema>
 
 export async function getNetwork({
     networkId,
@@ -24,6 +26,7 @@ export async function getNetwork({
             Authorization: `token ${token}`,
         },
     })
+
     return networkSchema.parse(await res.json())
 }
 
@@ -42,6 +45,8 @@ const networkMemberSchema = z.object({
     physicalAddress: z.string().nullish(),
 })
 const networkMembersSchema = z.array(networkMemberSchema)
+
+export type ZTNetworkMember = z.infer<typeof networkMemberSchema>
 
 export async function getNetworkMembers({
     networkId,

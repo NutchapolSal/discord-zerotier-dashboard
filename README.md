@@ -17,3 +17,4 @@ you need to provide some environment variables so the script can work
 - `ZEROTIER_DESCRIPTION_KEYWORD`: if specified, the script will only show details of network members with the keyword in their description
 - `DISCORD_WEBHOOK_URL`: a discord webhook url
 - `DISCORD_WEBHOOK_MESSAGE_ID`: the message id for the script to keep updating the same message. if unspecified, the script will send a new message and print out the message id to be put here.
+- `ZEROTIER_DOMAIN`: if you aren't configuring DNS in ZeroTier, set this to the domain you're publishing records to.
